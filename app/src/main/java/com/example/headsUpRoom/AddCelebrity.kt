@@ -47,21 +47,25 @@ class AddCelebrity : AppCompatActivity() {
         }
 
         btAdd.setOnClickListener {
-            //db
-            var s1 = name.text.toString()
-            var s2 = taboo1.text.toString()
-            var s3 = taboo2.text.toString()
-            var s4 = taboo3.text.toString()
-            val s = CelebrityDetails(0,s1,s2,s3,s4)
-            CoroutineScope(Dispatchers.IO).launch {
-                CelebrityDatabase.getInstance(applicationContext).CelebrityDao().insertCelebrity(s)
+            if (name.text.isEmpty() || taboo1.text.isEmpty() || taboo2.text.isEmpty() || taboo3.text.isEmpty())
+                Toast.makeText(this, "Fill all fields please", Toast.LENGTH_SHORT).show()
+            else {
+                //db
+                var s1 = name.text.toString()
+                var s2 = taboo1.text.toString()
+                var s3 = taboo2.text.toString()
+                var s4 = taboo3.text.toString()
+                val s = CelebrityDetails(0, s1, s2, s3, s4)
+                CoroutineScope(Dispatchers.IO).launch {
+                    CelebrityDatabase.getInstance(applicationContext).CelebrityDao().insertCelebrity(s)
+                }
+                Toast.makeText(this, "Celebrity Added", Toast.LENGTH_SHORT).show()
+                re()
+                name.setText("")
+                taboo1.setText("")
+                taboo2.setText("")
+                taboo3.setText("")
             }
-            Toast.makeText(this, "Celebrity Added", Toast.LENGTH_SHORT).show()
-            re()
-            name.setText("")
-            taboo1.setText("")
-            taboo2.setText("")
-            taboo3.setText("")
         }
     }
 
